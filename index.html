@@ -152,36 +152,21 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-technicalArticle/设计模式/解析器模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2021/01/17/hello-world/" class="archive-article-date">
-  	<time datetime="2021-01-17T09:34:10.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-17</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+        <h3 id="一、领域规则模式之Interpreter（解析器模式）"><a href="#一、领域规则模式之Interpreter（解析器模式）" class="headerlink" title="一、领域规则模式之Interpreter（解析器模式）"></a>一、领域规则模式之Interpreter（解析器模式）</h3><p>在特定领域中，某些变化虽然频繁，但可以抽象为某种规则。这时候，结合特定领域，将问题抽象为语法规则，从而给出在该领域获得一般性解决方案。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Expression</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(<span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; var)</span></span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">virtual</span> ~Expression()&#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">varExpression</span>:</span> <span class="keyword">public</span> Expression&#123;</span><br><span class="line">    <span class="keyword">char</span> key;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    VarExpression(<span class="keyword">const</span> <span class="keyword">char</span>&amp; key)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;key=key;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(<span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; var)</span> <span class="keyword">override</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> var[key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//符号表达式</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SymbolExpression</span>:</span> <span class="keyword">public</span> Expression&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    Expression * left;</span><br><span class="line">    Expression * right;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    symbolExpression(Expression* left,Expression* right):left(left),right(right)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//减法运算</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubExpression</span>:</span><span class="keyword">public</span> SymbolExpression&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    SubExpression(Expression* left,Expression* right):symbolExpression(left,right)&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(<span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; var)</span><span class="keyword">override</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> left-&gt;interpreter(var)-right-&gt;interpreter(var);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//加法运算</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddExpression</span>:</span><span class="keyword">public</span> SymbolExpression&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    AddExpression(Expression* left,Expression* right):symbolExpression(left,right)&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(<span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; var)</span><span class="keyword">override</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> left-&gt;interpreter(var)+right-&gt;interpreter(var);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Expression* <span class="title">analyse</span><span class="params">(<span class="built_in">string</span> expStr)</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;Expression*&gt; expStack;</span><br><span class="line">    Expression* left=<span class="literal">nullptr</span>;</span><br><span class="line">    Expression* right=<span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;expStr.size();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">switch</span>(expStr[i])&#123;</span><br><span class="line">         <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">        	left=expStack.top();</span><br><span class="line">        	right=<span class="keyword">new</span> VarExpression(expStr[++i]);</span><br><span class="line">        	expStack.push(<span class="keyword">new</span> AddExpression(left,right));</span><br><span class="line">        	<span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">        	left=expStack.top();</span><br><span class="line">        	right=<span class="keyword">new</span> VarExpression(expStr[++i]);</span><br><span class="line">        	expStack.push(<span class="keyword">new</span> SubExpression(left,right));</span><br><span class="line">        	<span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">        	expStack.push(<span class="keyword">new</span> VarExpression(expStr[i]));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Expression* expression=expStack.top();</span><br><span class="line">    <span class="keyword">return</span> expression;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//释放内存</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">release</span><span class="params">(Expression *expression)</span></span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> expStr=<span class="string">&quot;a+b-c+d&quot;</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; var;</span><br><span class="line">    var.insert(<span class="built_in">make_pair</span>(<span class="string">&#x27;a&#x27;</span>,<span class="number">5</span>));</span><br><span class="line">    var.insert(<span class="built_in">make_pair</span>(<span class="string">&#x27;b&#x27;</span>,<span class="number">3</span>));</span><br><span class="line">    var.insert(<span class="built_in">make_pair</span>(<span class="string">&#x27;c&#x27;</span>,<span class="number">2</span>));</span><br><span class="line">    var.insert(<span class="built_in">make_pair</span>(<span class="string">&#x27;d&#x27;</span>,<span class="number">1</span>));</span><br><span class="line">    Expression* expression=analyse(expStr);</span><br><span class="line">    <span class="keyword">int</span> result=expression-&gt;interpreter(var);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;result&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    release(expression);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-模式定义"><a href="#1-模式定义" class="headerlink" title="1.模式定义"></a>1.模式定义</h4><p>给定一个语言，定义他的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。</p>
+<h4 id="2-要点总结"><a href="#2-要点总结" class="headerlink" title="2.要点总结"></a>2.要点总结</h4><ul>
+<li>interpreter模式的应用场合是Interpreter模式应用中的难点，只有满足“业务规则频繁变化，且类似的结构不断重复出现，并且容易抽象为语法规则的问题”才适用Interpreter模式。</li>
+<li>使用interperter模式来表示文法规则，从而可以使用面向对象技巧来方便地“扩展”文法。</li>
+<li>interpreter模式比较适合简单的文法，对于复杂的文法表示，interpreter模式会产生比较大的类层次结构，需要求助于语法分析生成器这样的标准工具。</li>
+<li>解析器现今并不常用，适用于小而简单的文法。</li>
+</ul>
+<h4 id="3、结构"><a href="#3、结构" class="headerlink" title="3、结构"></a>3、结构</h4>
       
 
       
@@ -193,7 +178,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/17/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%A3%E6%9E%90%E5%99%A8%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -223,6 +208,571 @@
 
 
   
+    <article id="post-technicalArticle/设计模式/备忘录模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、学前思考"><a href="#一、学前思考" class="headerlink" title="一、学前思考"></a>一、学前思考</h3><p>1.是对对象的行为做备份以免状态变化的时候数据更改或者发生其它变化导致原本的行为（行为其实就是函数）发生错误吗？</p>
+<h3 id="二、状态变化模式之Memento（备忘录模式）"><a href="#二、状态变化模式之Memento（备忘录模式）" class="headerlink" title="二、状态变化模式之Memento（备忘录模式）"></a>二、状态变化模式之Memento（备忘录模式）</h3><p>在组件构建过程中，某些对象的状态经常面临变化，如何对这些变化进行有效的管理？同时又维持高层模块的稳定？“状态变化”模式为这一问题提供了解决方案。</p>
+<h4 id="1-动机"><a href="#1-动机" class="headerlink" title="1.动机"></a>1.动机</h4><p>在软件构建过程中，某些对象的状态在转换过程中，可能由于某种需要，要求程序能够回溯倒对象之前处于某个节点时状态。如果使用一些公有接口来让其它对象得到对象的状态，便会暴露对象的细节实现。</p>
+<p>如何实现对象状态的良好保存与恢复？但同时又不会因此而破坏对象本身的封装性。</p>
+<h4 id="2-模式定义"><a href="#2-模式定义" class="headerlink" title="2.模式定义"></a>2.模式定义</h4><p>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可以将该对象恢复到原先保存的状态。</p>
+<h4 id="3-要点总结"><a href="#3-要点总结" class="headerlink" title="3.要点总结"></a>3.要点总结</h4><ul>
+<li>备忘录存储原发器（Originator）对象的内部状态，在需要时回复原发器状态。</li>
+<li>Memento模式的核心是信息隐藏，即Originator需要向外隐藏信息，保持封装性。但同时又需要将状态保持到外界（Memento）。</li>
+<li>由于现代语言运行时（如C#，java等）都具有相当的对象序列化支持，因此往往采用效率较高、有比较容易正确实现的序列化方案来实现Memento模式。</li>
+</ul>
+<h3 id="三、散装知识点"><a href="#三、散装知识点" class="headerlink" title="三、散装知识点"></a>三、散装知识点</h3><p>1.备忘录模式有些过时，是个小模式。但思想没变，在实现的时候，现在使用框架或者序列化的方式更容易实现。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/桥模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、单一职责模式之Bridge（桥模式）"><a href="#一、单一职责模式之Bridge（桥模式）" class="headerlink" title="一、单一职责模式之Bridge（桥模式）"></a><strong>一、单一职责模式之Bridge（桥模式）</strong></h3><p><strong>1.概念</strong>：在软件的组织设计中，如果责任划分得不清晰，是的继承得到得结果往往随着需求变化，子类极具膨胀，同时充斥着重复代码，这时候得关键就是划清责任。</p>
+<p><strong>2.理解</strong>：使用继承增加功能会使得代码重复量太多。需要将责任划分清楚</p>
+<p><strong>3.动机</strong>：由于某些固有的实现逻辑，使得他们具有两个乃至多个维度的变化。产生的问题：如何应对这种”多维度的变化”?如何利用面向对象技术来使得类型可以轻松的沿着两个乃至多个方向变化，而不引入额外复杂度？</p>
+<p>如果在不同的平台上支持不同的功能，部分函数需要改变，但是大多数（基本的事务）是不用改变的</p>
+<p><strong>4.操作</strong>：将继承转组合，也就是继承的类变成抽象类的指针（即生成指针对象），将编译时装配转换成运行时装配。这样相同的方法只要用指针指向就可以了，需要添加的方法则重新实现再指向对应的方法。同时需要接口隔离，将共有的方法提取出来到一个类中，可变的方法放到另外一个类。</p>
+<p>“如果不同的类有同样的字段，向上提（放到父类）”</p>
+<p><strong>5.模式定义</strong>：将抽象部分（业务功能）与实现部分（平台实现）芬妮，使他们可以独立地变化。                    –《设计模式》 GoF</p>
+<p><strong>个人理解</strong>：将平台实现（运行在譬如手机、电脑等不同平台）和具体实现（各平台不同功能）分离</p>
+<p><strong>6.要点总结</strong></p>
+<ul>
+<li><p>Bridge模式使用“对象间的组合关系”解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。所谓抽象和实现沿着各自维度，即“子类化他们”</p>
+<p>理解：将指针抽象为桥，连接两边的变化</p>
+</li>
+<li><p>Bridge模式有时候类似于多个继承方案，但是多继承方案往往违背单一职责原则（即一个类只有一个变化原因），复用性比较差。Bridge模式是比多继承方案更好的解决办法。</p>
+</li>
+<li><p>Bridge模式的引用一般在“两个非常强的变化维度”，有时一个类也有多于两个的变化维度，这时可以Bridge的扩展模式</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/单件模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、对象性能模式之Singleton（单例模式）"><a href="#一、对象性能模式之Singleton（单例模式）" class="headerlink" title="一、对象性能模式之Singleton（单例模式）"></a>一、对象性能模式之Singleton（单例模式）</h3><p>面向对象很好地解决了“抽象”的问题，但是不可避免地要付出一定的代价。对于通常情况来讲，面向对象的成本大都可以忽略不计。但是某些情况，面向对象所带来的成本必须谨慎处理。</p>
+<p><strong>1.动机</strong></p>
+<ul>
+<li>在软件系统中，经常有这样一些特殊的类，必须保证他们在系统中只存在一个实例，才能确保他们的逻辑正确性、以及良好的效率（比如任务管理器）</li>
+<li>如何绕过常规的构造器，提供一种机制来保证一个类只有一个实例？</li>
+<li>这应该是类设计者的责任，而不是使用者的责任。</li>
+</ul>
+<p><strong>2.模式定义</strong></p>
+<p>证一个类仅有一个实例，并提供一个该实例的全局访问点。</p>
+<p><strong>3.要点总结</strong></p>
+<p>Singleton模式中的实例构造器可以设置为protected以允许子类派生</p>
+<p>Singleton模式一般不要支持拷贝构造函数和Clone接口，因为这有可能导致多个对象实例与Singleton模式的初衷违背</p>
+<p>如何实现多线程环境下的Singleton？注意对双检查锁的正确实现。</p>
+<h3 id="二、散装知识点、问题"><a href="#二、散装知识点、问题" class="headerlink" title="二、散装知识点、问题"></a>二、散装知识点、问题</h3><p>1.用户不会按照你所期望的方式使用产品</p>
+<p>2.如果自己不写构造器，系统自动生成缺省和拷贝构造器</p>
+<p>3.在编译器层面可能出现reorder问题。new一个对象过程应该是分配内存，再执行构造器，再赋值。而reorder可能是分配内存，直接赋值，再执行构造器（编译器做的事情）。java以及C++11版本之后加上volatile可以解决这个问题</p>
+<p>4.双检查锁容易出问题</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/迭代器模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、学前思考"><a href="#一、学前思考" class="headerlink" title="一、学前思考"></a>一、学前思考</h3><p>1.什么是构造器?</p>
+<p>构造器可以用public、priviate、protected这样的关键词修饰。没有返回值</p>
+<blockquote>
+<p>构造方法是一种特殊的方法，与一般的方法不同是：<br>1.构造方法的名字必须与定义他的类名完全相同，没有返回类型，甚至连void也没有。<br>2.构造方法的调用是在创建一个对象时使用new操作进行的。构造方法的作用是初始化对象。<br>3.不能被static、final、synchronized、abstract和native修饰。<br>构造方法不能被子类继承。 构造方法可以被重载。<br>没有参数的构造方法称为默认构造方法，<br>与一般的方法一样，构造方法可以进行任何活动，但是经常将他设计为进行各种初始化活动，<br>比如初始化对象的属性。<br>在Java中,任何变量在被使用前都必须先设置初值.<br>Java提供了为类的成员变量赋初值的专门功能:构造方法(constructor)构造方法是一种特殊的成员方法,<br>它的特殊性反映在如下几个方面:<br>(1)构造方法名与类名相同.<br>(2)构造方法不返回任何值,也没有返回类型.<br>(3)每个类可以有零个或多个构造方法.<br>(4)构造方法在创建对象时自动执行,一般不能显式地直接调用</p>
+</blockquote>
+<p>2.STL以及泛型编程中的迭代器是什么？</p>
+<p>泛型编程是使用基于模板的迭代器</p>
+<p>泛型编程有很多种迭代器。有五种迭代器。很少用面向对象的迭代器</p>
+<p>通过接口的方式去隔离算法和容器之间的变化</p>
+<h3 id="二、数据结构模式之Iterator（构造器模式）"><a href="#二、数据结构模式之Iterator（构造器模式）" class="headerlink" title="二、数据结构模式之Iterator（构造器模式）"></a>二、数据结构模式之Iterator（构造器模式）</h3><p>常常有一些组件在内部具有特定的数据结构，如果让客户程序依赖这些特定的数据结构，将极大地破坏组件的复用。这时候，将这些特定的数据结构都封装在内部，在外部提供统一的接口，来实现这些与特定数据结构无关的访问。</p>
+<h5 id="1-动机"><a href="#1-动机" class="headerlink" title="1.动机"></a>1.动机</h5><p>在软件构建过程中，集合对象内部结构常常变化各异。但对于这些集合对象，我们希望在不暴露内部结构的同时，可以让外部客户代码透明地访问其中包含的元素；同时这种“透明遍历“也为”同一种算法在多种集合对象上进行操作“提供了可能</p>
+<p>使用面向对象技术将这种遍历机制抽象成为”迭代器对象“为”应对变化种的集合对象“提供了一种优雅的方式。</p>
+<h5 id="2-模式定义"><a href="#2-模式定义" class="headerlink" title="2.模式定义"></a>2.模式定义</h5><p>提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露（稳定）该对象的内部表示。</p>
+<h5 id="3-结构"><a href="#3-结构" class="headerlink" title="3.结构"></a>3.结构</h5><h5 id="4-要点总结"><a href="#4-要点总结" class="headerlink" title="4.要点总结"></a>4.要点总结</h5><p>迭代抽象：访问一个聚合对象的内容而无需暴露他的内部表示</p>
+<p>迭代多态：为便利不同的集合结构提供一个统一的接口，从而支持同样的算法在不同的集合结构上进行操作</p>
+<p>迭代器的健壮性考虑：遍历的同时更该迭代器所在的集合结构，会导致问题。</p>
+<h3 id="三、散装知识点"><a href="#三、散装知识点" class="headerlink" title="三、散装知识点"></a>三、散装知识点</h3><p>1.这个模式在C++中已经过时了。迭代器的设计是纯面向对象思想的。虚函数调用有调用成本，有二次指针的间接调用。</p>
+<p>2.面向对象的核心是多态。模板也是一种多态技术（编译时多态）。虚函数是运行时多态，运行时多态性能比编译时多态低。</p>
+<p>3.本文针对C++，在其他语言种这种方法有很大的用处。（比如JAVA，C#）</p>
+<p>4.随着技术发展很多设计模式会过时，但是思想不会过时</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/组件模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、学前思考"><a href="#一、学前思考" class="headerlink" title="一、学前思考"></a>一、学前思考</h3><p>1.什么是组件模式？</p>
+<p>猜想：</p>
+<p>2.设计模式设计原则就有一个继承转组合，是这么个意思吗？</p>
+<h3 id="二、数据结构模式之Composite（组件模式）"><a href="#二、数据结构模式之Composite（组件模式）" class="headerlink" title="二、数据结构模式之Composite（组件模式）"></a>二、数据结构模式之Composite（组件模式）</h3><p>常常有一些组件在内部具有特定得数据结构，如果让客户程序依赖这些特定的数据结构，将极大地破坏组件的复用。这时候，将这些特定的数据结构封装在内部，在外部提供统一的接口，来实现与特定数据结构无关的访问。</p>
+<h4 id="1-动机"><a href="#1-动机" class="headerlink" title="1.动机"></a>1.动机</h4><p>如何将“客户代码与复杂的对象容器结构”解耦？让对象容器自己来实现自身复杂的数据结构，从而使得客户代码就像处理简单对象一样来处理复杂的对象容器？</p>
+<h4 id="2-模式定义"><a href="#2-模式定义" class="headerlink" title="2.模式定义"></a>2.模式定义</h4><p>将对象组合成树形结构以表示“部分-整体”的层次结构 。Composite使得用户对单个对象和组合对象的使用具有一致性（稳定）。</p>
+<h4 id="3-结构"><a href="#3-结构" class="headerlink" title="3.结构"></a>3.结构</h4><p>（）</p>
+<h4 id="4-要点总结"><a href="#4-要点总结" class="headerlink" title="4.要点总结"></a>4.要点总结</h4><ul>
+<li>Composite模式采用树形结构来实现普遍存在的对象容器，从而将“一对多”的关系转化为“一对一”的关系，使得客户代码可以一致地（复用）处理对象和对象容器，无需关心处理的是单个的对象还是组合的对象容器。</li>
+<li>将“客户代码与复杂的对象容器结构”解耦是Composite的核心思想，解耦之后，客户代码将与纯粹的抽象接口–而非对象容器的内部实现结构–发生依赖，从而更能“应对变化”。</li>
+<li>Composite模式在具体实现中，可以让父对象中的子对象反向追溯；如果父对象有频繁的便利需求，可以使用缓存技巧来改善效率。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E4%BB%B6%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/状态模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、学前思考"><a href="#一、学前思考" class="headerlink" title="一、学前思考"></a>一、学前思考</h3><p>1.什么是状态模式?</p>
+<p>2.猜想：状态模式是解决对象状态变化象关的问题？</p>
+<p>3.那对象变化是指什么样的变化呢？</p>
+<h3 id="二、“状态变化”模式之State（状态模式）"><a href="#二、“状态变化”模式之State（状态模式）" class="headerlink" title="二、“状态变化”模式之State（状态模式）"></a>二、“状态变化”模式之State（状态模式）</h3><p>在组件构建过程中，某些对象的状态经常面临变化，如何对这些变化进行有效管理？同时又维持高层模块的稳定？“状态变化模式”为这一问题提供了一种解决方案</p>
+<p>理解：状态变化模式是为了应对对象状态变化且维持高层模块稳定</p>
+<h4 id="1-动机"><a href="#1-动机" class="headerlink" title="1.动机"></a>1.动机</h4><p>当项目中又多个状态时，将状态切换转换成对象状态行为的切换</p>
+<h4 id="2-模式定义"><a href="#2-模式定义" class="headerlink" title="2.模式定义"></a>2.模式定义</h4><p>允许一个对象在其内部状态改变他的行为，从未使得对象看起来似乎修改了其行为</p>
+<h4 id="3-结构"><a href="#3-结构" class="headerlink" title="3.结构"></a>3.结构</h4><p><strong>聚合（Aggregation）</strong>：关联关系的一种特例，表示部分和整体（整体 has a 部分）的关系。uml中用带空心菱形头的实线表示Aggregation关系，菱形头指向整体。</p>
+<p><strong>特征</strong>：属于是关联的特殊情况，体现部分-整体关系，是一种弱拥有关系；整体和部分可以有不一样的生命周期；是一种弱关联；</p>
+<h4 id="4-要点总结"><a href="#4-要点总结" class="headerlink" title="4.要点总结"></a>4.要点总结</h4><ul>
+<li>State模式将所有与一个特定状态象关的行为都放入一个State的子类对象中，在对象状态切换时，切换相应的对象；但同时维持State的接口，这样实现了具体操作与状态转换之间的解耦</li>
+<li>为不同的状态引入不同的对象使得状态转换变得更加明确，而且可以保证不会出现状态不一致的情况，因转换是原子性的–即要么彻底转换过来，要么不转换。</li>
+<li>如果State对象没有实例变量，那么各个上下文可以共享同一个State对象，从而节省对象开销。</li>
+</ul>
+<h3 id="三、散装知识点"><a href="#三、散装知识点" class="headerlink" title="三、散装知识点"></a>三、散装知识点</h3><p>1.虚函数其实就是运行时的if，else</p>
+<p>2.枚举类型的作用是什么？</p>
+<blockquote>
+<p>有的变量只有几种可能取值。如人的性别只有两种可能取值，星期只有七种可能取值。在 C 语言中对这样取值比较特殊的变量可以定义为枚举类型。所谓枚举是指将变量的值一一列举出来，变量只限于列举出来的值的范围内取值。定义一个变量是枚举类型，可以先定义一个枚举类型名，然后再说明这个变量是该枚举类型。</p>
+</blockquote>
+<p>3.状态机和状态模式是一样的</p>
+<p>4.state模式和策略模式十分相像</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/代理模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、接口隔离模式之Proxy（代理模式）"><a href="#一、接口隔离模式之Proxy（代理模式）" class="headerlink" title="一、接口隔离模式之Proxy（代理模式）"></a>一、接口隔离模式之Proxy（代理模式）</h3><p>在组件构建过程中，某些接口之间直接的依赖常常会带来很多问题、甚至根本无法实现。采用添加一层间接（稳定）接口，来隔离本来相互紧密关联的接口是一种常见的解决方案</p>
+<h4 id="1-动机"><a href="#1-动机" class="headerlink" title="1.动机"></a>1.动机</h4><p>在面向对象系统中，有些对象由于某些原因（比如对象创建的开销很大，或者某些操作需要安全控制，或者需要进程外的访问等），直接访问会给使用者、或者系统结构带来很多麻烦。</p>
+<p>如何在不失去透明操作（一致性）对象的同时来管理/控制这些对象特有的复杂性？增加一层间接层是软件开发中常见的解决方式</p>
+<p>Q：中间件就是这么来的吗？</p>
+<h4 id="2-模式定义"><a href="#2-模式定义" class="headerlink" title="2.模式定义"></a>2.模式定义</h4><p>为其他对象提供一种代理以控制（隔离，使用接口）对这个对象的访问</p>
+<h4 id="3-要点总结"><a href="#3-要点总结" class="headerlink" title="3.要点总结"></a>3.要点总结</h4><p>“增加一层间接层”是软件系统中对许多复杂问题的一种常见解决方法。在面向对象对象系统中，直接使用 某些对象会带来很多问题，作为间接层的proxy对象便是解决这一问题的常用手段。</p>
+<p>具体proxy设计模式的实现方法、实现粒度都相差很大，有些可能对单个对象做细粒度的控制，如copy-on-write技术，有些可能对组件模块提供抽象代理层，在框架层次对对象做proxy</p>
+<p>proxy并不一定要求保持接口完整的一致性，只要能实现间接控制，有时候损及一些透明性也是可以接受的。</p>
+<h3 id="二、散装知识点、问题"><a href="#二、散装知识点、问题" class="headerlink" title="二、散装知识点、问题"></a>二、散装知识点、问题</h3><p>1.代理模式有时又专门的工具来实现。原理简单但是实现起来复杂</p>
+<p>2.分布式系统大量的使用代理模式</p>
+<p>3.代理本质是增加间接层，透明的对系统进行更新迭代</p>
+<p>Q：是不是相当于灰度升级？灰度升级是怎么实现的？</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/构建器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、对象创建模式之Builder（构建器模式）"><a href="#一、对象创建模式之Builder（构建器模式）" class="headerlink" title="一、对象创建模式之Builder（构建器模式）"></a><strong>一、对象创建模式之Builder（构建器模式）</strong></h3><p>通过“对象创建”绕开new，来避免对象创建过程（new）中所导致的紧耦合（依赖具体类）</p>
+<h4 id="1-动机"><a href="#1-动机" class="headerlink" title="1.动机"></a><strong>1.动机</strong></h4><p>在软件系统中，有时面临着“一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成；由于需求的变化，这个复杂对象的各个部分进程面临着剧烈的变化，但是将他们组合在一起的算法却相对稳定。</p>
+<p>如何应对这种变化？如何提供一种“封装机制”来隔离出“复杂对象的各个部分”的变化，从而保持系统中的“稳定构建算法”不随着需求的改变而改变？</p>
+<h4 id="2-模式定义"><a href="#2-模式定义" class="headerlink" title="2.模式定义"></a>2.模式定义</h4><p>将一个复杂对象的构建与其表示相分离，使得同样的构建过程（稳定）可以构建不同的表示（变化）</p>
+<h3 id="3-要点总结"><a href="#3-要点总结" class="headerlink" title="3.要点总结"></a>3.要点总结</h3><ul>
+<li>Builder模式主要用于“分步骤构建一个复杂的对象”。在这其中“分步骤”是一个稳定的算法，而复杂对象的各个部分则经常变化。</li>
+<li>变化点在哪里，封装在哪里–Builder模式主要在于应对“复杂对象各个部分”的频繁需求变动。其缺点在于难以应对“分步骤构建算法”的需求变动。</li>
+<li>在Builder模式中，要注意不同语言中构造器内调用虚函数的差别。</li>
+</ul>
+<h3 id="二、散装知识点"><a href="#二、散装知识点" class="headerlink" title="二、散装知识点"></a><strong>二、散装知识点</strong></h3><p>1.C++构造函数里面调用虚函数完成的是静态绑定而不是动态绑定</p>
+<p>2.构造函数中虚函数不可以调用子类</p>
+<p>3.子类的构造函数是先调用父类的构造函数的</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%9E%84%E5%BB%BA%E5%99%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-technicalArticle/设计模式/原型模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、对象创建模式之Prototype（原型模式）"><a href="#一、对象创建模式之Prototype（原型模式）" class="headerlink" title="一、对象创建模式之Prototype（原型模式）"></a>一、对象创建模式之Prototype（原型模式）</h3><p>（用的相对较少，工厂方法和抽象工厂用的比较多）</p>
+<p><strong>动机</strong></p>
+<p>在软件系统中，经常面临着“某些结构复杂的对象”的创建工作；由于需求的变化，这些对象经常面临着剧烈的变化，但是他们却拥有比较稳定一致的接口。</p>
+<p>如何应对这种变化？如何向“客户程序（使用这些对象的程序）”隔离出这些易变的对象，从而使得“依赖这些易变对象的客户程序”不随着需求的改变而改变</p>
+<p><strong>模式定义</strong></p>
+<p>使用原型实例指定创建对象的种类，然后通过拷贝这些原型来创建新的对象</p>
+<p><strong>什么时候使用原型模型</strong></p>
+<p>用工厂方法能用简单的步骤把对象创建出来，还是需要考虑对象复杂的中间状态，如果需要考虑对象复杂的中间状态那么就是用原型模式。（开发中遇到的情况比较少）</p>
+<p><strong>要点总结</strong></p>
+<ul>
+<li>Prototype模式同样用于隔离类对象的使用者和具体类型（易变类) 之间的耦合关系，它同样要求这些”易变类”拥有“稳定的接口”。</li>
+<li>Prototype模式对于“如何创建易变类的实体对象”采用“原型克隆”的方法来做，它使得我们可以非常灵活地动态创建“拥有某些稳定接口”的新对象——所需工作仅仅是注册一个新类的对象（即原型），然后在任何需要的地方Clone。</li>
+<li>Prototype模式中的Clone方法可以利用某些框架中的序列化来实现深拷贝。</li>
+</ul>
+<h3 id="二、散装知识点"><a href="#二、散装知识点" class="headerlink" title="二、散装知识点"></a><strong>二、散装知识点</strong></h3><p>1.java中clone（）实际上的实现就是序列化和反序列化。C++要实现序列化反序列化很麻烦，拷贝构造函数是他的标配。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/17/technicalArticle/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 
